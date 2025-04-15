@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancer Video Editor Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+      color: #f0f0f0;
+      scroll-behavior: smooth;
+    }
+    header {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+     /* Updated CSS for iframe solution */
+  .video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .video-background iframe {
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    min-height: 100vh;
+    min-width: 177.77vh; /* 16:9 aspect ratio */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  /* For mobile devices */
+  @media (max-aspect-ratio: 16/9) {
+    .video-background iframe {
+      height: 100vh;
+      width: 177.77vh;
+    }
+  }
+    .header-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 0;
+    }
+    .header-content {
+      position: relative;
+      z-index: 1;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 0%, #121212 100%);
+      opacity: 0.5;
+      z-index: 1;
+    }
+    header h1 {
+      font-size: 5rem;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      position: relative;
+      z-index: 2;
+    }
+    header p {
+      font-size: 1.5rem;
+      color: #ccc;
+      position: relative;
+      z-index: 2;
+    }
+    section {
+      padding: 60px 0;
+      position: relative;
+    }
+    .project-card {
+      background: #1e1e1e;
+      border-radius: 15px;
+      padding: 20px;
+      transition: all 0.5s ease;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: 0.5s;
+    }
+    .project-card:hover::before {
+      left: 100%;
+    }
+    .project-card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.1);
+    }
+    .btn-custom {
+      background: #ff4d4d;
+      color: #fff;
+      border-radius: 30px;
+      padding: 10px 25px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      border: none;
+      z-index: 1;
+    }
+    .btn-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background-color: #ff1a1a;
+      transition: all 0.3s;
+      z-index: -1;
+    }
+    .btn-custom:hover::before {
+      width: 100%;
+    }
+    .btn-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 77, 77, 0.4);
+    }
+    .social-icons a {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 1.5rem;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .social-icons a:hover {
+      color: #ff4d4d;
+      transform: translateY(-5px) scale(1.2);
+    }
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      position: relative;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #ff4d4d, transparent);
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    .badge-skill {
+      display: inline-block;
+      margin: 5px;
+      padding: 8px 16px;
+      background: #2a2a2a;
+      color: #fff;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      cursor: default;
+    }
+    .badge-skill:hover {
+      background: #ff4d4d;
+      transform: scale(1.1);
+    }
+    .tag-line {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 4rem;
+      color: #ff5e00;
+      text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+      position: relative;
+      animation: textGlow 2s infinite alternate;
+    }
+    @keyframes textGlow {
+      from { text-shadow: 0 0 10px rgba(255, 77, 77, 0.5); }
+      to { text-shadow: 0 0 20px rgba(255, 77, 77, 0.8), 0 0 30px rgba(255, 77, 77, 0.6); }
+    }
+    video {
+      border-radius: 10px;
+      transition: all 0.5s;
+    }
+    video:hover {
+      box-shadow: 0 0 20px rgba(255, 77, 77, 0.5);
+    }
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .cursor-trail {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 77, 77, 0.5);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      mix-blend-mode: screen;
+    }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(0);
+      animation: ripple 1s linear;
+      pointer-events: none;
+    }
+    @keyframes ripple {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-trail" class="cursor-trail"></div>
+
+  <header class="parallax">
+    <!-- YouTube Background Video Iframe -->
+    <div class="video-background">
+      <iframe 
+      src="https://www.youtube.com/embed/Rse8dAcoXEw?autoplay=1&mute=1&controls=0&loop=1&playlist=Rse8dAcoXEw&rel=0&showinfo=0&modestbranding=1" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+    </div>
+    
+    <!-- Overlay & content remains the same -->
+    <div class="header-overlay"></div>
+    <div class="header-content animate__animated animate__fadeIn">
+      <h1 class="floating">Hi, I'm Ganesh</h1>
+      <p class="animate__animated animate__fadeIn animate__delay-1s">Freelance Video Editor | Color Grader</p>
+      <a href="#portfolio" class="btn btn-custom mt-3 animate__animated animate__fadeIn animate__delay-2s">View My Work</a>
+    </div>
+  </header>
+
+  <section id="about" class="container text-center">
+    <h2 class="mb-4 animate__animated" data-animate="animate__fadeInUp">About Me</h2>
+    <p class="animate__animated" data-animate="animate__fadeInUp animate__delay-1s">I'm a freelance video editor with over 1 years of experience crafting stunning visuals for brands, creators, and businesses. Whether it's YouTube videos, promos, or cinematic reels, I bring stories to life with precision and flair.</p>
+    <div class="mt-4 animate__animated" data-animate="animate__fadeInUp animate__delay-2s">
+      <span class="badge-skill">After Effects</span>
+      <span class="badge-skill">DaVinci Resolve</span>
+      <span class="badge-skill">Motion Graphics</span>
+      <span class="badge-skill">Color Grading</span>
+      <span class="badge-skill">Sound Design</span>
+    </div>
+  </section>
+
+ 
+  <section id="portfolio" class="container">
+    <h2 class="text-center mb-5 animate__animated" data-animate="animate__fadeInDown">My Work</h2>
+    <div class="row g-4">
+      <div class="col-md-4 animate__animated" data-animate="animate__fadeInLeft">
+        <div class="project-card">
+          <h5></h5>
+          <div class="ratio ratio-16x9">
+            <iframe 
+              src="https://www.youtube.com/embed/Rse8dAcoXEw?si=bWDOxwwHgsURa-de" 
+              frameborder="0" 
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 animate__animated" data-animate="animate__fadeInUp">
+        <div class="project-card">
+          <h5></h5>
+          <div class="ratio ratio-16x9">
+            <iframe 
+              src="https://www.youtube.com/embed/ug9U7i8UzUk?si=qOg2SfoElA-3ODvw" 
+              frameborder="0" 
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 animate__animated" data-animate="animate__fadeInUp">
+        <div class="project-card">
+          <h5></h5>
+          <div class="ratio ratio-16x9">
+            <iframe 
+              src="https://www.youtube.com/embed/b_RcjQ_ArdM?si=e4NYcOGeYNjjvTFZ" 
+              frameborder="0" 
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+      
+    
+    </div>
+  </section>
+
+  <section class="d-flex justify-content-center align-items-center parallax" style="height: 50vh; background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1485846234645-a62644f84728') center/cover; color: #fff; text-align: center;">
+    <p class="tag-line animate__animated animate__pulse animate__infinite">Every client brief is a story waiting to be told.</p>
+  </section>
+
+  <section id="contact" class="container text-center">
+    <h2 class="mb-4 animate__animated" data-animate="animate__fadeIn">Get In Touch</h2>
+    <p class="animate__animated" data-animate="animate__fadeIn animate__delay-1s">If you'd like to collaborate, hire me, or just say hi, drop a message below!</p>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=myworkganesh@gmail.com" class="btn btn-custom mb-3 animate__animated" data-animate="animate__pulse animate__delay-2s">Email Me</a>
+    <div class="social-icons mt-3 animate__animated" data-animate="animate__fadeIn animate__delay-2s">
+      <a href="https://www.instagram.com/ganesh__sharma16?igsh=NjFvMjFqeTU4OXNw" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/ganesh-sharma-bab451360" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://discord.com/invite/alexeditor" target="_blank"><i class="fab fa-discord"></i></a>
+      <a href="https://www.youtube.com/@workwithGanesh-f7m" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Ganesh Video Edits. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Animation on scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const animateElements = document.querySelectorAll('[data-animate]');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const animationClasses = entry.target.getAttribute('data-animate').split(' ');
+            entry.target.classList.add(...animationClasses);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      animateElements.forEach(el => observer.observe(el));
+
+      // Cursor trail effect
+      const cursorTrail = document.getElementById('cursor-trail');
+      let trailElements = [];
+      const trailCount = 5;
+      
+      for (let i = 0; i < trailCount; i++) {
+        let trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.width = (20 - i * 3) + 'px';
+        trail.style.height = (20 - i * 3) + 'px';
+        trail.style.opacity = 1 - (i * 0.2);
+        document.body.appendChild(trail);
+        trailElements.push(trail);
+      }
+      
+      let mouseX = 0, mouseY = 0;
+      let posX = 0, posY = 0;
+      
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+      
+      function updateCursor() {
+        posX += (mouseX - posX) / 5;
+        posY += (mouseY - posY) / 5;
+        
+        trailElements.forEach((trail, i) => {
+          const nextTrail = trailElements[i - 1] || trailElements[0];
+          const x = nextTrail.style.left ? parseFloat(nextTrail.style.left) : posX;
+          const y = nextTrail.style.top ? parseFloat(nextTrail.style.top) : posY;
+          
+          trail.style.left = x + 'px';
+          trail.style.top = y + 'px';
+        });
+        
+        requestAnimationFrame(updateCursor);
+      }
+      
+      updateCursor();
+
+      // Ripple effect
+      document.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.left = e.clientX + 'px';
+        ripple.style.top = e.clientY + 'px';
+        document.body.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 1000);
+      });
+    });
+     
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.querySelector('.video-background');
+      
+      
+      video.play().catch(error => {
+        
+        video.muted = true;
+        video.play();
+      });
+      
+     
+    });
+  </script>
+</body>
+</html>
